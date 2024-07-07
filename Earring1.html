@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/e1style.css">
+  
+    
+</head>
+<body>
+  <section>
+    <!-- Using Container to make sure it is responsive-->
+    <div class="container flex">
+      <div class="left">
+        <div class="main_image">
+          <img src="/Earring1.png" id="earr1" alt="Earring1"> <!--Adding the main image-->
+        </div>
+      </div>
+      <!--Adding Details for the Product-->
+      <div class="right">
+        <h3>Unique Western Earrings</h3>
+        <h4 id="h1">$20</h4> <!--Price-->
+        <p>Unique Western earrings with a geometrical cool-cut design. Crafted with precision, each earring showcases clean lines and bold shapes, making them a standout accessory for any outfit and perfect for adding a touch of sophistication to your ensemble.</p>
+        <h5>Color:</h5> <!--Color Options-->
+        <div class="color-options">
+          <!--Adding Javascript to change price based on colors-->
+          <button class="color-btn" onclick='document.getElementById("h1").innerHTML = "$20",changeimg()'>Silver</button> 
+          <button class="color-btn" onclick='document.getElementById("h1").innerHTML = "$25",changeimg2()'>Golden</button>
+        </div>
+        <h5>Number</h5>
+        <div class="add flex1"><!--Decreases and increases on clicking - and + -->
+          <span onclick="decreaseQuantity()">-</span>
+          <label id="quantity">1</label>
+          <span onclick="increaseQuantity()">+</span>
+          <button style="font-weight: bolder;" onclick="addToCart()">Add to Cart</button> 
+
+        </div>
+        <!--Add to Cart Functionality-->
+      </div>
+    </div>
+  </section>
+
+  <div class="cart-container" id="cart-container">
+    <h3>Cart</h3>
+    <div id="cart-items"></div>
+  </div>
+<!--JavaScript-->
+  <script>//To change images on clicking color buttons
+    function changeimg(){
+      var img=document.getElementById('earr1');
+      img.src='Earring1.png';
+    }
+    function changeimg2(){
+      var img2=document.getElementById('earr1');
+      img2.src='Earring1_v.png';
+    }
+    // Initialize an empty array to hold the items in the cart
+var cart = [];
+
+// Initialize the quantity of the item to be added to the cart
+var quantity = 1;
+
+// Function to increase the quantity of the item
+function increaseQuantity() {
+  quantity++; // Increment the quantity
+  // Update the displayed quantity in the HTML element with ID 'quantity'
+  document.getElementById('quantity').innerText = quantity;
+}
+
+// Function to decrease the quantity of the item
+function decreaseQuantity() {
+  if (quantity > 1) { // Ensure the quantity does not go below 1
+    quantity--; // Decrement the quantity
+    // Update the displayed quantity in the HTML element with ID 'quantity'
+    document.getElementById('quantity').innerText = quantity;
+  }
+}
+
+// Function to add an item to the cart
+function addToCart() {
+  // Create an item object with its details
+  var item = {
+    name: "Unique Western Earrings", // Name of the item
+    price: document.getElementById('h1').innerText, // Price of the item from the HTML element with ID 'h1'
+    quantity: quantity, // Current quantity of the item
+    image: document.getElementById('earr1').src // Image source of the item from the HTML element with ID 'earr1'
+  };
+  cart.push(item); // Add the item to the cart array
+  displayCart(); // Call function to update the cart display
+}
+
+// Function to display the cart items
+function displayCart() {
+  // Get the HTML element with ID 'cart-items' to display cart items
+  var cartItems = document.getElementById('cart-items');
+  cartItems.innerHTML = ''; // Clear the current cart display
+  // Loop through each item in the cart and append it to the cart display
+  cart.forEach((item, index) => {
+    cartItems.innerHTML += `
+      <div class="cart-item">
+        <img src="${item.image}" alt="${item.name}"> <!-- Display the item image -->
+        <span>${item.name}</span> <!-- Display the item name -->
+        <span>${item.quantity} x ${item.price}</span> <!-- Display the item quantity and price -->
+        <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button> <!-- Button to remove the item from the cart -->
+      </div>
+    `;
+  });
+}
+
+// Function to remove an item from the cart
+function removeFromCart(index) {
+  cart.splice(index, 1); // Remove the item at the specified index from the cart
+  displayCart(); // Call function to update the cart display
+}
+</script>
+</body>
+</html>

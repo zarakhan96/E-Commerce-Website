@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/e3style.css">
+
+</head>
+<body>
+  <section>
+    <div class="container flex">
+      <div class="left">
+        <div class="main_image">
+          <img src="/Earring4.png" id="earr1" alt="Earring4">
+        </div>
+      </div>
+      <div class="right">
+        <h3>Enameled Hoop Earrings</h3>
+        <h4 id="h1">$30</h4>
+        <p>Add a touch of sophistication to your style with these exquisite Enameled Hoop Earrings. Featuring a smooth, polished finish, each hoop is carefully enameled to create a vibrant, glossy surface that catches the light beautifully. </p>
+        <h5>Color:</h5>
+        <div class="color-options">
+          <button class="color-btn" onclick='document.getElementById("h1").innerHTML = "$30"; changeimg()'>Blue</button>
+          <button class="color-btn" onclick='document.getElementById("h1").innerHTML = "$32"; changeimg2()'>Red</button>
+        </div>
+        <h5>Number</h5>
+        <div class="add flex1">
+          <span onclick="decreaseQuantity()">-</span>
+          <label id="quantity">1</label>
+          <span onclick="increaseQuantity()">+</span>
+          <button style="font-weight: bolder;" onclick="addToCart()">Add to Cart</button>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cart-container" id="cart-container">
+    <h3>Cart</h3>
+    <div id="cart-items"></div>
+  </div>
+
+  <script>
+    function changeimg(){
+      var img=document.getElementById('earr1');
+      img.src='Earring4.png';
+    }
+    function changeimg2(){
+      var img2=document.getElementById('earr1');
+      img2.src='Earring4_v.png';
+    }
+
+    var cart = [];
+    var quantity = 1;
+
+    function increaseQuantity() {
+      quantity++;
+      document.getElementById('quantity').innerText = quantity;
+    }
+
+    function decreaseQuantity() {
+      if (quantity > 1) {
+        quantity--;
+        document.getElementById('quantity').innerText = quantity;
+      }
+    }
+
+    function addToCart() {
+      var item = {
+        name: "Enameled Hoop Earrings",
+        price: document.getElementById('h1').innerText,
+        quantity: quantity,
+        image: document.getElementById('earr1').src
+      };
+      cart.push(item);
+      displayCart();
+    }
+
+    function displayCart() {
+      var cartItems = document.getElementById('cart-items');
+      cartItems.innerHTML = '';
+      cart.forEach((item, index) => {
+        cartItems.innerHTML += `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}">
+            <span>${item.name}</span>
+            <span>${item.quantity} x ${item.price}</span>
+            <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+          </div>
+        `;
+      });
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      displayCart();
+    }
+  </script>
+</body>
+</html>
